@@ -1,0 +1,197 @@
+/* RESET */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Ubuntu, Arial, sans-serif;
+  background: #ffffff;
+  color: #1f2933;
+  line-height: 1.6;
+}
+
+/* TOPBAR */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+#apiBtn {
+  background: transparent;
+  border: 1px solid #d1d5db;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#apiBtn:hover {
+  background: #f3f4f6;
+}
+
+/* LAYOUT */
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 32px 16px;
+}
+
+/* HERO */
+
+.hero {
+  text-align: center;
+  padding: 48px 16px;
+}
+
+.hero h1 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: 32px;
+}
+
+/* TOOL */
+
+.tool {
+  max-width: 500px;
+  margin: auto;
+}
+
+.tool input {
+  width: 100%;
+  font-family: monospace;
+  font-size: 1.8rem;
+  padding: 14px;
+  text-align: center;
+  border: 2px solid #d1d5db;
+  border-radius: 10px;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+/* BUTTONS */
+
+.primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.primary:hover {
+  background: #1d4ed8;
+}
+
+.secondary {
+  background: #f3f4f6;
+}
+
+.secondary:hover {
+  background: #e5e7eb;
+}
+
+/* CONTENT */
+
+.content,
+.faq {
+  margin-top: 64px;
+}
+
+.content h2,
+.faq h2 {
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+}
+
+.content p {
+  margin-bottom: 16px;
+}
+
+/* FAQ */
+
+.faq details {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+
+.faq summary {
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+}
+
+.faq summary::after {
+  content: "▼";
+  position: absolute;
+  right: 0;
+  transition: transform 0.3s ease;
+}
+
+details[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.faq p {
+  margin-top: 12px;
+  color: #374151;
+}
+
+/* TOAST */
+
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111827;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  font-size: 0.9rem;
+}
+
+#toast.show {
+  opacity: 1;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .tool input {
+    font-size: 1.4rem;
+  }
+
+}
