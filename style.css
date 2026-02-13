@@ -35,6 +35,7 @@ body {
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
+  flex: 0 0 auto;
 }
 
 #apiBtn:hover {
