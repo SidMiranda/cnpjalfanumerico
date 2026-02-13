@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerador de CNPJ Alfanumérico 2026 | Receita Federal</title>
+
+  <!-- SEO Meta -->
+  <meta name="description" content="Gerador de CNPJ Alfanumérico conforme padrão da Receita Federal 2026. Gere, copie e entenda como funciona o novo CNPJ com letras e números." />
+  <meta name="keywords" content="CNPJ alfanumérico, gerador de CNPJ 2026, Receita Federal, módulo 11, CNPJ com letras, novo CNPJ Brasil" />
+  <meta name="author" content="Gerador CNPJ" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .mono {
+      font-family: "Courier New", Courier, monospace;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-900">
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col justify-center items-center px-4">
+
+    <!-- Central Tool -->
+    <div class="w-full max-w-xl text-center space-y-6">
+
+      <h1 class="text-3xl font-semibold mb-4">
+        Gerador de CNPJ Alfanumérico
+      </h1>
+
+      <input
+        id="cnpjInput"
+        type="text"
+        readonly
+        class="w-full text-center mono text-2xl p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="00.000.000/0000-00"
+      />
+
+      <div class="flex justify-center gap-4">
+
+        <button
+          id="generateBtn"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition"
+        >
+          Gerar Novo CNPJ
+        </button>
+
+        <button
+          id="copyBtn"
+          class="border border-gray-300 hover:bg-gray-100 px-6 py-3 rounded-lg font-medium transition"
+        >
+          Copiar
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- Footer Link -->
+    <div class="mt-12">
+      <button
+        id="apiLink"
+        class="text-sm text-gray-500 hover:text-blue-600 transition"
+      >
+        API para Desenvolvedores
+      </button>
+    </div>
+
+  </section>
+
+  <!-- SEO Article Section -->
+  <section class="bg-gray-50 py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+
+      <article class="space-y-6">
+
+        <h2 class="text-2xl font-semibold">
+          Como funciona o novo CNPJ Alfanumérico?
+        </h2>
+
+        <p>
+          A partir de julho de 2026, a Receita Federal passou a adotar oficialmente
+          o modelo de CNPJ alfanumérico no Brasil, permitindo a utilização de letras
+          e números na composição do cadastro nacional de pessoas jurídicas. Essa
+          mudança foi necessária para ampliar a capacidade de registros, evitando
+          o esgotamento das combinações exclusivamente numéricas e garantindo a
+          continuidade do sistema tributário nacional.
+        </p>
+
+        <p>
+          Conforme estabelecido em Nota Técnica da Receita Federal, o novo padrão
+          mantém a estrutura tradicional de 14 caracteres, no formato
+          XX.XXX.XXX/XXXX-XX, porém os doze primeiros passam a aceitar valores de
+          0 a 9 e de A a Z. Essa modernização afeta sistemas contábeis, ERPs,
+          plataformas fiscais e integrações via API, exigindo adequação técnica
+          por parte das empresas e desenvolvedores.
+        </p>
+
+        <p>
+          Para o cálculo dos dígitos verificadores, o modelo continua utilizando
+          o algoritmo Módulo 11, porém com uma adaptação baseada na tabela ASCII.
+          Cada caractere é convertido em valor numérico subtraindo-se 48 do código
+          ASCII correspondente, garantindo compatibilidade entre letras e números.
+          Esse método assegura validação confiável, prevenção contra erros de
+          digitação e integridade nos registros do novo CNPJ alfanumérico.
+        </p>
+
+      </article>
+
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+    const input = document.getElementById("cnpjInput");
+    const generateBtn = document.getElementById("generateBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const apiLink = document.getElementById("apiLink");
+
+    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    function getRandomChar() {
+      return chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    function charToValue(char) {
+      return char.charCodeAt(0) - 48;
+    }
+
+    function calculateDigit(base, weights) {
+      let sum = 0;
+
+      for (let i = 0; i < weights.length; i++) {
+        const value = charToValue(base[i]);
+        sum += value * weights[i];
+      }
+
+      const mod = sum % 11;
+      return mod < 2 ? 0 : 11 - mod;
+    }
+
+    function generateBase() {
+      let base = "";
+
+      for (let i = 0; i < 12; i++) {
+        base += getRandomChar();
+      }
+
+      return base;
+    }
+
+    function generateCNPJ() {
+      const base = generateBase();
+
+      const weights1 = [5,4,3,2,9,8,7,6,5,4,3,2];
+      const weights2 = [6,5,4,3,2,9,8,7,6,5,4,3,2];
+
+      const d1 = calculateDigit(base, weights1);
+      const d2 = calculateDigit(base + d1, weights2);
+
+      return base + d1 + d2;
+    }
+
+    function formatCNPJ(cnpj) {
+      return (
+        cnpj.substring(0, 2) + "." +
+        cnpj.substring(2, 5) + "." +
+        cnpj.substring(5, 8) + "/" +
+        cnpj.substring(8, 12) + "-" +
+        cnpj.substring(12, 14)
+      );
+    }
+
+    function generateAndDisplay() {
+      const cnpj = generateCNPJ();
+      input.value = formatCNPJ(cnpj);
+    }
+
+    generateBtn.addEventListener("click", generateAndDisplay);
+
+    copyBtn.addEventListener("click", () => {
+      if (!input.value) return;
+
+      navigator.clipboard.writeText(input.value);
+
+      copyBtn.innerText = "Copiado!";
+      setTimeout(() => {
+        copyBtn.innerText = "Copiar";
+      }, 1500);
+    });
+
+    apiLink.addEventListener("click", () => {
+      alert("Em breve");
+    });
+
+    // Auto generate on load
+    generateAndDisplay();
+  </script>
+
+</body>
+</html>
