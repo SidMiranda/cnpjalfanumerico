@@ -94,10 +94,87 @@ copyBtn.addEventListener("click", () => {
   showToast("CNPJ copiado!");
 });
 
-apiBtn.addEventListener("click", () => {
-  alert("API para Empresas: Em desenvolvimento.");
-});
+// apiBtn.addEventListener("click", () => {
+//   alert("API para Empresas: Em desenvolvimento.");
+// });
 
 /* INIT */
 
 generateAndShow();
+
+/* --- MODAL & API FORM (Adicione ao final, substituindo o alert antigo) --- */
+
+const modal = document.getElementById("modalApi");
+const closeModalBtn = document.querySelector(".close-modal");
+const apiForm = document.getElementById("apiForm");
+const formStatus = document.getElementById("form-status");
+
+// 1. Abrir Modal (Substitui o alert)
+apiBtn.addEventListener("click", () => {
+  modal.style.display = "block";
+});
+
+// 2. Fechar Modal (X)
+closeModalBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+  formStatus.innerText = ""; // Limpa mensagens antigas
+});
+
+// 3. Fechar clicando fora
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+    formStatus.innerText = "";
+  }
+});
+
+// 4. Envio do Formulário (AJAX para o Formspree)
+apiForm.addEventListener("submit", async (event) => {
+  event.preventDefault(); // Impede recarregar a página
+  
+  const btn = apiForm.querySelector("button");
+  const originalText = btn.innerText;
+  
+  // Estado de "Enviando"
+  btn.innerText = "Enviando...";
+  btn.disabled = true;
+  formStatus.innerText = "";
+
+  const data = new FormData(event.target);
+
+  try {
+    const response = await fetch(event.target.action, {
+      method: apiForm.method,
+      body: data,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      formStatus.innerText = "✅ Sucesso! Avisaremos você.";
+      formStatus.style.color = "#059669"; // Verde
+      apiForm.reset();
+      
+      // Fecha o modal automaticamente após 2 seg
+      setTimeout(() => {
+        modal.style.display = "none";
+        formStatus.innerText = "";
+        btn.innerText = originalText;
+        btn.disabled = false;
+      }, 2000);
+      
+    } else {
+      const errorData = await response.json();
+      formStatus.innerText = "❌ Erro. Verifique o e-mail.";
+      formStatus.style.color = "#dc2626"; // Vermelho
+      btn.innerText = originalText;
+      btn.disabled = false;
+    }
+  } catch (error) {
+    formStatus.innerText = "❌ Erro de conexão.";
+    formStatus.style.color = "#dc2626";
+    btn.innerText = originalText;
+    btn.disabled = false;
+  }
+});

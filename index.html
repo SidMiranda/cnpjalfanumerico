@@ -147,6 +147,36 @@
 <!-- TOAST -->
 <div id="toast">Copiado com sucesso!</div>
 
+<div id="modalApi" class="modal-overlay">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    
+    <h3>🚀 API para Desenvolvedores</h3>
+    <p>Integre a validação do CNPJ alfanumérico direto no seu ERP ou sistema bancário. Entre na lista de espera.</p>
+    
+    <form id="apiForm" action="https://formspree.io/f/xnjbdpqw" method="POST">
+      
+      <div class="form-group">
+        <label for="email">E-mail Corporativo</label>
+        <input type="email" id="email" name="email" placeholder="dev@suaempresa.com.br" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="volume">Volume Mensal</label>
+        <select name="volume" id="volume">
+          <option value="Baixo">Até 1.000 reqs</option>
+          <option value="Medio">1.000 a 50.000 reqs</option>
+          <option value="Alto">+50.000 reqs</option>
+        </select>
+      </div>
+
+      <button type="submit" class="primary btn-full">Entrar na Lista</button>
+      
+      <p id="form-status"></p>
+    </form>
+  </div>
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>
