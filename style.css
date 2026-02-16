@@ -1,305 +1,454 @@
-/* RESET */
+/* --- VS CODE THEME VARIABLES --- */
+:root {
+  --bg-body: #1e1e1e;       /* Fundo do Editor */
+  --bg-sidebar: #252526;    /* Fundo da Barra Lateral/Header */
+  --bg-input: #3c3c3c;      /* Fundo de Inputs */
+  --bg-button: #007acc;     /* Azul VS Code */
+  --bg-button-hover: #0062a3;
+  --text-main: #d4d4d4;     /* Texto padrão */
+  --text-muted: #858585;    /* Texto secundário */
+  --border-color: #454545;  /* Bordas */
+  --accent-cyan: #9cdcfe;   /* Variáveis */
+  --shadow: rgba(0, 0, 0, 0.3);
+}
 
+/* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Atualize o BODY para compensar a altura do menu fixo */
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Ubuntu, Arial, sans-serif;
-  background: #ffffff;
-  color: #1f2933;
+  font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-main);
   line-height: 1.6;
+  padding-top: 80px; /* <--- ADICIONE ISSO (Empurra o site para baixo) */
 }
 
-/* TOPBAR */
-
+/* Atualize a TOPBAR para fixar no teto */
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 24px;
-  border-bottom: 1px solid #e5e7eb;
+  background-color: var(--bg-sidebar);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px var(--shadow);
+  
+  /* --- NOVAS REGRAS DE FIXAÇÃO --- */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Garante que fique acima do conteúdo, mas abaixo do modal */
 }
 
 .logo {
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-family: "Consolas", "Courier New", monospace;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--accent-cyan);
+  letter-spacing: -0.5px;
 }
 
+.logo::before { content: "{ "; color: var(--bg-button); }
+.logo::after { content: " }"; color: var(--bg-button); }
+
+/* CORREÇÃO AQUI: Botão do Header não estica mais */
 #apiBtn {
   background: transparent;
-  border: 1px solid #d1d5db;
-  padding: 6px 12px;
-  border-radius: 6px;
+  border: 1px solid var(--bg-button);
+  color: var(--bg-button);
+  padding: 6px 14px;
+  border-radius: 4px;
   cursor: pointer;
-  flex: 0 0 auto;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  flex: 0 0 auto; /* Garante que ele fique pequeno no canto */
+  width: auto;    /* Previne largura total */
 }
 
 #apiBtn:hover {
-  background: #f3f4f6;
+  background: var(--bg-button);
+  color: white;
 }
 
-/* LAYOUT */
-
+/* LAYOUT - Atualize apenas o max-width aqui */
 .container {
-  max-width: 1100px;
+  max-width: 1100px; /* <--- MUDOU DE 900px PARA 1100px */
   margin: auto;
   padding: 32px 16px;
 }
 
-/* HERO */
-
+/* HERO & TOOL */
 .hero {
   text-align: center;
-  padding: 48px 16px;
+  padding: 40px 16px;
 }
 
 .hero h1 {
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-size: 2rem;
   margin-bottom: 32px;
+  color: #fff;
+  font-weight: 600;
 }
 
-/* TOOL */
-
 .tool {
-  max-width: 500px;
+  max-width: 550px;
   margin: auto;
+  background-color: var(--bg-sidebar);
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 .tool input {
   width: 100%;
-  font-family: monospace;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
   font-size: 1.8rem;
-  padding: 14px;
+  padding: 16px;
   text-align: center;
-  border: 2px solid #d1d5db;
-  border-radius: 10px;
+  background-color: var(--bg-input);
+  color: var(--accent-cyan);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin-bottom: 20px;
+  outline: none;
 }
 
-.buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-button {
-  flex: 1;
-  padding: 12px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
+.tool input:focus {
+  border-color: var(--bg-button);
 }
 
 /* BUTTONS */
+.buttons {
+  display: flex;
+  gap: 12px;
+}
+
+/* Regra geral de botões */
+button {
+  padding: 14px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+/* CORREÇÃO: Apenas os botões da ferramenta esticam */
+.buttons button {
+  flex: 1;
+}
 
 .primary {
-  background: #2563eb;
+  background: var(--bg-button);
   color: #fff;
 }
 
 .primary:hover {
-  background: #1d4ed8;
+  background: var(--bg-button-hover);
 }
 
 .secondary {
-  background: #f3f4f6;
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
 }
 
 .secondary:hover {
-  background: #e5e7eb;
+  background: #4a4a4a;
 }
 
-/* CONTENT */
-
-.content,
-.faq {
+/* CONTENT & INFO */
+.content, .faq {
   margin-top: 64px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.content h2,
-.faq h2 {
-  font-size: 1.8rem;
-  margin-bottom: 24px;
+.content h2, .faq h2 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: #fff;
+  border-left: 4px solid var(--bg-button);
+  padding-left: 12px;
 }
 
 .content p {
+  color: var(--text-main);
   margin-bottom: 16px;
+  font-size: 1.05rem;
 }
 
 /* FAQ */
-
 .faq details {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 12px 16px;
+  background-color: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
   margin-bottom: 12px;
 }
 
 .faq summary {
+  padding: 16px;
   font-weight: 600;
   cursor: pointer;
   list-style: none;
   position: relative;
+  background-color: rgba(255,255,255,0.02);
+}
+
+.faq summary:hover {
+  background-color: rgba(255,255,255,0.05);
 }
 
 .faq summary::after {
-  content: "▼";
+  content: "+";
   position: absolute;
-  right: 0;
-  transition: transform 0.3s ease;
+  right: 20px;
+  color: var(--bg-button);
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 details[open] summary::after {
-  transform: rotate(180deg);
+  content: "-";
 }
 
 .faq p {
-  margin-top: 12px;
-  color: #374151;
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-main);
 }
 
 /* TOAST */
-
 #toast {
   position: fixed;
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: #111827;
+  background: var(--bg-button);
   color: white;
-  padding: 10px 18px;
-  border-radius: 8px;
+  padding: 12px 24px;
+  border-radius: 4px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-#toast.show {
-  opacity: 1;
-}
+#toast.show { opacity: 1; }
 
-/* RESPONSIVE */
-
-@media (max-width: 600px) {
-
-  .buttons {
-    flex-direction: column;
-  }
-
-  .tool input {
-    font-size: 1.4rem;
-  }
-
-}
-
-/* --- MODAL STYLES (Adicione ao final do arquivo) --- */
-
+/* MODAL */
 .modal-overlay {
-  display: none; /* Oculto por padrão */
+  display: none;
   position: fixed;
-  z-index: 1000; /* Fica acima de tudo */
+  z-index: 2000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(31, 41, 51, 0.7); /* Usando tons do seu tema */
-  backdrop-filter: blur(4px);
-  animation: fadeIn 0.3s;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.2s;
 }
 
 .modal-content {
-  background-color: #ffffff;
+  background-color: var(--bg-sidebar);
   margin: 10% auto;
   padding: 32px;
-  border-radius: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
   width: 90%;
-  max-width: 420px;
+  max-width: 450px;
   position: relative;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  text-align: left; /* Garante alinhamento do form */
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  color: var(--text-main);
 }
 
-/* Tipografia do Modal */
-.modal-content h3 {
-  margin-bottom: 12px;
-  color: #1f2933;
-  font-size: 1.4rem;
-}
+.modal-content h3 { color: #fff; margin-bottom: 10px; }
+.modal-content p { color: var(--text-muted); }
 
-.modal-content p {
-  margin-bottom: 24px;
-  color: #4b5563;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-/* Botão Fechar (X) */
 .close-modal {
+  color: var(--text-muted);
   position: absolute;
   right: 20px;
-  top: 16px;
-  color: #9ca3af;
-  font-size: 28px;
-  font-weight: bold;
+  top: 15px;
+  font-size: 24px;
   cursor: pointer;
-  line-height: 1;
-  transition: color 0.2s;
 }
+.close-modal:hover { color: #fff; }
 
-.close-modal:hover {
-  color: #1f2933;
-}
+.form-group label { color: var(--text-main); }
 
-/* Formulário */
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #374151;
-}
-
-.form-group input,
+.form-group input, 
 .form-group select {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #e5e7eb; /* Mesmo estilo do seu input principal */
-  border-radius: 8px;
-  font-size: 1rem;
-  font-family: inherit;
-  background: #fff;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: #fff;
+  border-radius: 4px;
 }
+
+.form-group input::placeholder { color: var(--text-muted); }
 
 .form-group input:focus,
 .form-group select:focus {
-  outline: none;
-  border-color: #2563eb;
+  border-color: var(--bg-button);
 }
 
-/* Botão Full Width específico do modal */
-.btn-full {
-  width: 100%;
-  margin-top: 8px;
-}
+.btn-full { width: 100%; margin-top: 10px; }
 
-/* Status do envio */
 #form-status {
-  margin-top: 12px;
-  font-size: 0.9rem;
   text-align: center;
-  min-height: 20px;
+  margin-top: 10px;
+  font-size: 0.9rem;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .buttons { flex-direction: column; }
+  .tool input { font-size: 1.4rem; }
+}
+
+/* --- PRICING CARDS (VS CODE STYLE) --- */
+.pricing-container {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.card {
+  background-color: var(--bg-sidebar);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 32px;
+  width: 300px;
+  text-align: left;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border-color: var(--bg-button);
+}
+
+/* Destaque do plano recomendado */
+.card.featured {
+  border: 2px solid var(--bg-button);
+  background-color: rgba(0, 122, 204, 0.05); /* Azul bem fraquinho no fundo */
+}
+
+.badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-button);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.card h3 {
+  color: var(--accent-cyan); /* Azul claro código */
+  font-family: "Consolas", monospace;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 16px 0;
+}
+
+.price small {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.features {
+  list-style: none;
+  margin-bottom: 32px;
+  flex-grow: 1; /* Empurra o botão para baixo */
+}
+
+.features li {
+  margin-bottom: 12px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+.features li::before {
+  content: "✓";
+  color: #4ec9b0; /* Verde código */
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+/* Botão de compra full width */
+.card .btn-buy {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--bg-button);
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.card .btn-buy:hover {
+  background-color: var(--bg-button-hover);
+}
+
+/* SUCCESS PAGE Styles */
+.success-box {
+  max-width: 600px;
+  margin: 80px auto;
+  text-align: center;
+  background-color: var(--bg-sidebar);
+  border: 1px solid #4ec9b0; /* Borda Verde */
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.key-box {
+  background-color: var(--bg-input);
+  color: #ce9178; /* Cor de String (Laranja/Rosa) */
+  padding: 16px;
+  font-family: "Consolas", monospace;
+  font-size: 1.2rem;
+  margin: 24px 0;
+  border-radius: 4px;
+  border: 1px dashed var(--border-color);
+  user-select: all; /* Facilita copiar */
 }
